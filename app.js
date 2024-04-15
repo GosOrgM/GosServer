@@ -8,7 +8,7 @@ const UserRouter = require('./Routes/UserRouter')
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.json({ limit: '25mb' }));
 
 app.use('/user', UserRouter)
 app.listen(PORT, ()=>{
