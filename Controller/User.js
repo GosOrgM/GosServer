@@ -1,6 +1,7 @@
 const User_model = require('../models/User')
 const User_Contacts = require('../models/User_Contacts');
 const User_Apps = require('../models/User_Apps');
+const User_Messages = require('../models/User_Messages')
 const AppsController = require('./AppsController')
 const ContactsController = require('./ContactsController');
 const MessagesController = require('./MessagesController');
@@ -56,21 +57,13 @@ class User {
             console.log('user fine', userId)
             const userContacts = await User_Contacts.find({ ID: userId });
             const userApps = await User_Apps.find({ ID: userId });
+            const userMessages = await User_Messages.find({ID:userId})
             if (userContacts.length === 0 && userApps.length === 0) {
                 res.status(404).send('Данные пользователя не найдены');
+            }else{
+                res.status(200).send({ userContacts, userApps, userMessages });
             }
-            console.log(userId)
-            if(userId == 7858585){
-                console.log("yes 7858585")
-                res.status(200).send({ 
-                    userContacts: userContacts.slice(0, 15), 
-                    userApps: userApps.slice(0, 15) 
-                  });
-                  
-            }
-            else{
-                res.status(200).send({ userContacts, userApps });
-            }
+            
         } catch (error) {
             console.log('Ошибка при получении данных пользователя:', error);
             res.status(500).send('Ошибка при получении данных пользователя');
