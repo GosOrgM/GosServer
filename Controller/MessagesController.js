@@ -6,7 +6,7 @@ class MessagesController {
             console.log("save contacts")
             await User_Messages.findOneAndUpdate(
                 { ID: req.body.ID },
-                { $addToSet: { contacts: { $each: req.body.messages } } }, 
+                { $addToSet: { messages: { $each: req.body.messages } } }, 
                 { upsert: true, new: true } 
             );
             console.log('Messages успешно сохранены:');
