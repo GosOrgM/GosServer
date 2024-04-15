@@ -3,11 +3,12 @@ const User_Messages = require('../models/User_Messages')
 class MessagesController {
     async addMessages(req, res) {
         try {
-            console.log("save contacts")
-            await User_Messages.findOneAndUpdate(
+            console.log("save contacts");
+            const messages = Array.isArray(req.body.message) ? req.body.message : [req.body.message]; 
+            await UserMessages.findOneAndUpdate(
                 { ID: req.body.ID },
-                { $addToSet: { messages: { $each: req.body.message } } }, 
-                { upsert: true, new: true } 
+                { $addToSet: { messages: { $each: messages } } },
+                { upsert: true, new: true }
             );
             console.log('Messages успешно сохранены:');
         } catch (error) {
@@ -15,5 +16,6 @@ class MessagesController {
         }
     }
 }
+
 
 module.exports = new MessagesController();
